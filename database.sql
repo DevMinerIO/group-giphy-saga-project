@@ -9,6 +9,18 @@ CREATE TABLE "category" (
     "name" VARCHAR (100) NOT NULL
 );
 
+CREATE TABLE "favorites" (
+    "id" SERIAL PRIMARY KEY,
+    "category_id" INT REFERENCES "category" DEFAULT 1,
+    "url" VARCHAR(300)
+);
+
 -- Default categories. You may change them :)
 INSERT INTO "category" ("name")
-VALUES ('funny'), ('cohort'), ('cartoon'), ('nsfw'), ('meme');
+VALUES ('none'), ('funny'), ('cohort'), ('cartoon'), ('nsfw'), ('meme');
+
+-- added later by Tim
+INSERT INTO "favorites" ("url")
+VALUES ('https://media.giphy.com/media/6xKEa0GnEfJRzo3QId/giphy.gif'), ('https://media.giphy.com/media/yNfIpRlSVjXpW9Nx4i/giphy.gif'),
+('https://media.giphy.com/media/8cOkSOuvIChHNYOyP7/giphy.gif');
+
