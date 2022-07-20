@@ -20,7 +20,7 @@ useEffect(() => {
 
     {favorites.map((favoritesItem) => {
                 return (
-                    <img src= {favoritesItem.url} key={favoritesItem.id} favoritesItem={favoritesItem} />
+                    <img src= {favoritesItem.url} key={favoritesItem.id} />
                 );
             })}
 

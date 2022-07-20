@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const pool = require('../modules/pool');
 
@@ -5,11 +6,20 @@ const router = express.Router();
 
 // return all favorite images
 router.get('/', (req, res) => {
-  res.sendStatus(200);
+  const sqlText= 'SELECT * FROM "favorites";';
+  pool.query(sqlText)
+  .then(response =>{
+    res.send(response.rows)
+    console.log( response.rows )
+    res.sendStatus(200);
+  })
+  
+  
 });
 
 // add a new favorite
 router.post('/', (req, res) => {
+  
   res.sendStatus(200);
 });
 
