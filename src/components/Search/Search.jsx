@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import SearchItem from "../SearchItem/SearchItem";
+import './Search.css'
 
 function Search() {
     // Store to get gifs we searched
@@ -30,9 +31,10 @@ function Search() {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <label name='gifSearch'>What gif would you like search</label>
+                <label className="label" name='gifSearch'>What gif would you like search</label>
                 <input value={newGif} name="gifSearch" type="text" onChange={(event) => setNewGif(event.target.value)} />
-                <button type="submit">Submit</button>
+                {/* <button type="submit">Submit</button> */}
+                <button className="button-49" type="submit">Submit</button>
             </form>
             <h2>HERE are your search results:</h2>
             {
