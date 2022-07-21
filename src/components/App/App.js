@@ -8,7 +8,6 @@ import '../Search/Search.css';
 
 function App(props) {
 
-
   return (
     <>
       <Router>
@@ -24,9 +23,7 @@ function App(props) {
           </Route>
         </header>
       </Router>
-
     </>
-
   );
 }
 
