@@ -12,11 +12,10 @@ function App(props) {
     <Router>
     <div>
       <h1>Giphy Search!</h1>
-
+      <Search />
       <Route path="/favorite" exact>
       <Favorites />
       </Route>
-
     </div>
     </Router>
   );

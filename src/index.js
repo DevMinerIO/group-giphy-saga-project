@@ -12,8 +12,28 @@ import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 import createSagaMiddleware from 'redux-saga';
 
+// Generator Function for getSearch with sagas
+function* getSearch(action) {
+    // action.payload is what we put in the search bar. sent as template literal.
+    console.log(action.payload);
+    try {
+        const gifResponse = yield axios.get(`/api/category/search/${action.payload}`)
+        yield console.log('RESPONSE HERE', gifResponse);
+        yield put({ type: 'GET_GIFS', payload: gifResponse.data.data })
+        // gifResult is from the variable made above this line. 
+        // 'GET_GIFS has to match what is in the reducer
+        // yield console.log('RESULT FROM DB', gifResult.data);
+        // yield put({ type: 'GET_GIFS', payload: gifResult.data })
+    }
+    catch (error) {
+        console.log('ERROR in getSearch in index.js:', error);
+    }
+}
+
 function* watchSaga() {
     // yield something
+    // action type 'GIF_SELECT' has to match what is in the Search.jsx
+    yield takeEvery('GIF_SELECT', getSearch);
     try {
         yield takeEvery('FETCH_FAVORITE', fetchFavorite);
     }
@@ -25,9 +45,20 @@ function* watchSaga() {
 const sagaMiddleware = createSagaMiddleware();
 
 // reducers
+
+const gifList = (state = [], action) => {
+    switch (action.type) {
+        case 'GET_GIFS':
+            console.log('ACTION.PAYLOAD gifList', action.payload);
+            default:
+            return state;
+        }
+     }
+
 const favoritesReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_FAVORITE':
+
             return action.payload;
         default:
             return state;
@@ -47,6 +78,7 @@ function* fetchFavorite(){
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
+        gifList,
         favoritesReducer,
     }),
     // Add sagaMiddleware to our store
@@ -56,4 +88,4 @@ const storeInstance = createStore(
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(watchSaga);
 
-ReactDOM.render(<Provider store= {storeInstance}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
