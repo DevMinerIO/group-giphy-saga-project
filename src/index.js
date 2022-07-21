@@ -30,10 +30,23 @@ function* getSearch(action) {
     }
 }
 
+function* postFavs(action) {
+    try {
+        yield axios.post('/api/favorite', {url: action.payload});
+        yield put({ 
+            type: 'FETCH_FAVORITE'
+        })
+    }
+    catch (error) {
+        console.log('Error in postFavs:', error);
+    }
+}
+
 function* watchSaga() {
     // yield something
     // action type 'GIF_SELECT' has to match what is in the Search.jsx
     yield takeEvery('GIF_SELECT', getSearch);
+    yield takeEvery('ADD_TO_FAVS', postFavs);
     try {
         yield takeEvery('FETCH_FAVORITE', fetchFavorite);
     }
