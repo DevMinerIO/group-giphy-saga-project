@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import SearchItem from "../SearchItem/SearchItem";
 
 function Search() {
     // Store to get gifs we searched
@@ -20,6 +21,9 @@ function Search() {
         setNewGif('');
     }
 
+
+
+
     const dispatch = useDispatch();
 
 
@@ -35,7 +39,9 @@ function Search() {
                 // image is from gifResponse.data.data in the index.js. Already looked through the data.data. 
                 // Later looks through assumed(data.data).images.original.url. Path can be seen on browser object.
                 gifList.map((image, i) => {
-                return <img key={i} src={image.images.original.url} />
+                    return (
+                        <SearchItem image={image} key={i} />
+                    )
                 })
             }
 
