@@ -50,10 +50,11 @@ const gifList = (state = [], action) => {
     switch (action.type) {
         case 'GET_GIFS':
             console.log('ACTION.PAYLOAD gifList', action.payload);
+            return action.payload;
             default:
             return state;
         }
-     }
+    }
 
 const favoritesReducer = (state = [], action) => {
     switch (action.type) {
