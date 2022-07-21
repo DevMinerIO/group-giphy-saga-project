@@ -19,8 +19,12 @@ router.get('/', (req, res) => {
 
 // add a new favorite
 router.post('/', (req, res) => {
+  console.log('THIS IS REQ>BODY', req.body);
+  // req.body is the whole long object... So we created a key of url on postFavs(action) in index.jsx
+  // variable url will hold the req.body with the key of url from the index.jsx that we passed through
   const url = req.body.url;
   const sqlText = 'INSERT INTO favorites (url) VALUES ($1);';
+  // [url] is the $1 sanitization
   pool.query(sqlText, [url]).then((response) => {
     res.sendStatus(200)
   }).catch((error) => {

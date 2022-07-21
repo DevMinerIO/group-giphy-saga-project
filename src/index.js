@@ -32,8 +32,9 @@ function* getSearch(action) {
 
 function* postFavs(action) {
     try {
-        yield axios.post('/api/favorite', {url: action.payload});
-        yield put({ 
+        // line 36 passed a key of url with the answer of action.payload
+        yield axios.post('/api/favorite', { url: action.payload });
+        yield put({
             type: 'FETCH_FAVORITE'
         })
     }
@@ -50,7 +51,7 @@ function* watchSaga() {
     try {
         yield takeEvery('FETCH_FAVORITE', fetchFavorite);
     }
-    catch(error){
+    catch (error) {
         console.log('error in watch saga', error);
     }
 }
@@ -64,10 +65,10 @@ const gifList = (state = [], action) => {
         case 'GET_GIFS':
             console.log('ACTION.PAYLOAD gifList', action.payload);
             return action.payload;
-            default:
+        default:
             return state;
-        }
     }
+}
 
 const favoritesReducer = (state = [], action) => {
     switch (action.type) {
@@ -79,12 +80,12 @@ const favoritesReducer = (state = [], action) => {
     }
 }
 
-function* fetchFavorite(){
-    try{
+function* fetchFavorite() {
+    try {
         const favoriteResponse = yield axios.get('/api/favorite');
-        yield put ({type:'SET_FAVORITE', payload: favoriteResponse.data})
+        yield put({ type: 'SET_FAVORITE', payload: favoriteResponse.data })
     }
-    catch(error){
+    catch (error) {
         console.log('error fetchFavorite', error);
     }
 }
