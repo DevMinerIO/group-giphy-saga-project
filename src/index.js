@@ -34,26 +34,52 @@ function* watchSaga() {
     // yield something
     // action type 'GIF_SELECT' has to match what is in the Search.jsx
     yield takeEvery('GIF_SELECT', getSearch);
+    try {
+        yield takeEvery('FETCH_FAVORITE', fetchFavorite);
+    }
+    catch(error){
+        console.log('error in watch saga', error);
+    }
 }
 
 const sagaMiddleware = createSagaMiddleware();
 
 // reducers
+
 const gifList = (state = [], action) => {
     switch (action.type) {
         case 'GET_GIFS':
             console.log('ACTION.PAYLOAD gifList', action.payload);
+            default:
+            return state;
+        }
+     }
+
+const favoritesReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_FAVORITE':
+
             return action.payload;
         default:
             return state;
     }
 }
 
+function* fetchFavorite(){
+    try{
+        const favoriteResponse = yield axios.get('/api/favorite');
+        yield put ({type:'SET_FAVORITE', payload: favoriteResponse.data})
+    }
+    catch(error){
+        console.log('error fetchFavorite', error);
+    }
+}
 
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         gifList,
+        favoritesReducer,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
