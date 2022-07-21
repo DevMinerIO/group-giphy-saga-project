@@ -26,9 +26,33 @@ router.post('/', (req, res) => {
 // update given favorite with a category id
 router.put('/:favId', (req, res) => {
   // req.body should contain a category_id to add to this favorite image
-  
-
-  res.sendStatus(200);
+  let sqlText;
+  const id = req.params.favId;
+  switch (req.body.category) {
+    case 'funny':
+      sqlText= 'UPDATE favorites SET category_id= 2 WHERE id = $1;';
+      break
+    case 'cohort':
+      
+      sqlText= 'UPDATE favorites SET category_id= 3 WHERE id = $1;';
+      break
+    case 'cartoon':
+      sqlText= 'UPDATE favorites SET category_id= 4 WHERE id = $1;';
+      break
+    case 'nsfw':
+      sqlText= 'UPDATE favorites SET category_id= 5 WHERE id = $1;';
+      break
+    case 'meme':
+      sqlText= 'UPDATE favorites SET category_id= 6 WHERE id = $1;';
+      break
+    default : 
+      '';
+  }
+  pool.query(sqlText,[id]).then((response)=>{
+    res.sendStatus(200)
+  }).catch((error)=>{
+    console.log('error in router put', error)
+  })
 });
 
 // delete a favorite

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import React, {useEffect} from 'react';
-
+import FavoritesList from '../FavoritesList/FavoritesList';
 
 
 function Favorites() {
@@ -14,6 +14,8 @@ useEffect(() => {
 }, []);
 
 
+
+
     return (
         <div>
             <header>Favorites page!!</header>
@@ -22,16 +24,8 @@ useEffect(() => {
 
     {favorites.map((favoritesItem) => {
                 return (
-                    <>
-                    <select>
-            <option placeholder = "choose-category"> choose category </option> 
-            <option value = "comedy"> comedy </option>
-            <option value = "drama"> drama </option>
-            <option value = "romance"> romance </option>
-            </select>
-           
-                    <img src= {favoritesItem.url} key={favoritesItem.id} />
-                    </>
+                    
+                    <FavoritesList key = {favoritesItem.id} favoritesItem= {favoritesItem}/>
                 );
             })}
 
